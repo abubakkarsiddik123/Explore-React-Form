@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const ProductsForm = () => {
+const ProductsForm = ({handleAddProducts}) => {
+    const [error,setError]=useState('')
 
     const handleProducts = e=>{
         e.preventDefault()
@@ -9,6 +10,27 @@ const ProductsForm = () => {
         const quantity=e.target.quantity.value;
 
         // console.log(products,price,quantity);
+
+        if(name.length ===0){
+            setError("please provide a product a naem")
+            return;
+        }else if(price.length ===0){
+            setError("please provide a price")
+            return;
+        }else if(price <0){
+            setError("peice can be negative")
+            return;
+        }
+        else if(quantity.length ===0){
+            setError("please provide a quantity")
+            return;
+        }else if (quantity <0){
+            setError("quantity can be negative")
+            return
+        }else{
+            setError('')
+        }
+
 
         const newProduct = {
             name,
@@ -31,6 +53,7 @@ const ProductsForm = () => {
                 <input type="text" name='quantity' placeholder='Quantity'  /> <br />
                 <input type="submit" value="submit" />
             </form>
+            <p style={{color:"red"}}><small>{error}</small></p>
         </div>
     );
 };
